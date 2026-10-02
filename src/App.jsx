@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FeedbackForm from './components/FeedbackForm';
@@ -30,10 +30,29 @@ export default function App() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  const handleReviewSubmitted = (newReviewData) => {
-    // Save to localStorage securely
+  const handleReviewSubmitted = async (newReviewData) => {
+    // 1. Save to localStorage for instant local access
     const updated = saveReview(newReviewData);
     setReviews(updated);
+
+    // 2. Transmit to Central MongoDB database via Render backend
+    try {
+      await fetch('https://hackathon-3-0-awsf.onrender.com/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          judgeName: newReviewData.judgeName,
+          rating: newReviewData.rating,
+          review: newReviewData.review,
+          category: 'IDC Hackathon 3.0 // HEXA',
+        }),
+      });
+      console.log('✅ Feedback successfully stored in MongoDB database!');
+    } catch (err) {
+      console.warn('Backend sync note:', err);
+    }
   };
 
   return (

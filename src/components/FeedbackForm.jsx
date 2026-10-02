@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import StarRating from './StarRating';
 import SuccessMessage from './SuccessMessage';
 
@@ -131,25 +131,30 @@ export default function FeedbackForm({ onReviewSubmitted }) {
     // Begin Submission
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      // Save review to storage via parent
-      const savedReview = {
-        judgeName: judgeName.trim(),
-        rating,
-        review: review.trim()
-      };
+    const savedReview = {
+      judgeName: judgeName.trim(),
+      rating,
+      review: review.trim()
+    };
 
-      onReviewSubmitted(savedReview);
+    (async () => {
+      try {
+        if (onReviewSubmitted) {
+          await onReviewSubmitted(savedReview);
+        }
+      } catch (err) {
+        console.warn('Submission network note:', err);
+      } finally {
+        setSubmittedJudgeName(judgeName.trim());
+        setIsSubmitting(false);
+        setShowSuccess(true);
 
-      setSubmittedJudgeName(judgeName.trim());
-      setIsSubmitting(false);
-      setShowSuccess(true);
-
-      // Auto reset after 4.5 seconds
-      resetTimerRef.current = setTimeout(() => {
-        handleResetForm();
-      }, 4500);
-    }, 600);
+        // Auto reset after 4.5 seconds
+        resetTimerRef.current = setTimeout(() => {
+          handleResetForm();
+        }, 4500);
+      }
+    })();
   };
 
   const handleResetForm = () => {
