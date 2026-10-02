@@ -1,14 +1,17 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FeedbackForm from './components/FeedbackForm';
 import Footer from './components/Footer';
 import BackgroundEffects from './components/BackgroundEffects';
+import DesktopBlocker from './components/DesktopBlocker';
 import { getReviews, saveReview } from './utils/reviewStorage';
+import { initSecurityGuards, isDesktopDevice } from './utils/securityGuards';
 import './App.css';
 
 export default function App() {
   const [, setReviews] = useState(() => getReviews());
+  const [isDesktop, setIsDesktop] = useState(() => isDesktopDevice());
   const [theme, setTheme] = useState(() => {
     try {
       return localStorage.getItem('hexa_theme') || 'dark';
@@ -16,6 +19,22 @@ export default function App() {
       return 'dark';
     }
   });
+
+  useEffect(() => {
+    // Initialize DevTools blocking, anti-zoom, pull-to-refresh lock, and right click lock
+    initSecurityGuards();
+
+    const handleCheckDevice = () => {
+      setIsDesktop(isDesktopDevice());
+    };
+
+    window.addEventListener('resize', handleCheckDevice);
+    window.addEventListener('orientationchange', handleCheckDevice);
+    return () => {
+      window.removeEventListener('resize', handleCheckDevice);
+      window.removeEventListener('orientationchange', handleCheckDevice);
+    };
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -54,6 +73,10 @@ export default function App() {
       console.warn('Backend sync note:', err);
     }
   };
+
+  if (isDesktop) {
+    return <DesktopBlocker />;
+  }
 
   return (
     <div className="terminal-app-root">

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/hexa.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
   <title>IDC Hackathon 3.O</title>
   <meta name="description"
     content="Official Judge Feedback & Review terminal for Team HEXA at IDC Hackathon 3.O. Submit real-time ratings and evaluations." />
@@ -14,6 +14,48 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap"
     rel="stylesheet" />
+  
+  <!-- Immediate Early Protection (DevTools, Zoom, Right-Click, Pull-to-Refresh) -->
+  <script>
+    (function() {
+      // 1. Context Menu
+      window.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; }, true);
+      
+      // 2. DevTools & View Source & Zoom Keys
+      window.addEventListener('keydown', function(e) {
+        var key = (e.key || '').toLowerCase();
+        var code = e.keyCode || e.which;
+        // F12
+        if (key === 'f12' || code === 123) { e.preventDefault(); return false; }
+        // Ctrl+Shift+I / J / C / K / E
+        if (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'j' || key === 'c' || key === 'k' || key === 'e' || [73,74,67,75,69].indexOf(code) !== -1)) {
+          e.preventDefault(); return false;
+        }
+        // Mac Cmd+Option+I / J / C / U
+        if (e.metaKey && e.altKey && (key === 'i' || key === 'j' || key === 'c' || key === 'u' || [73,74,67,85].indexOf(code) !== -1)) {
+          e.preventDefault(); return false;
+        }
+        // Ctrl+U / Ctrl+S / Ctrl+P
+        if ((e.ctrlKey || e.metaKey) && (key === 'u' || key === 's' || key === 'p' || [85,83,80].indexOf(code) !== -1)) {
+          e.preventDefault(); return false;
+        }
+        // Ctrl + / - / 0 Zoom
+        if ((e.ctrlKey || e.metaKey) && (key === '+' || key === '-' || key === '=' || key === '_' || key === '0' || [187,189,107,109,48,96].indexOf(code) !== -1)) {
+          e.preventDefault(); return false;
+        }
+      }, true);
+
+      // 3. Mouse Wheel Zoom
+      window.addEventListener('wheel', function(e) {
+        if (e.ctrlKey || e.metaKey) { e.preventDefault(); }
+      }, { passive: false });
+
+      // 4. Pinch Zoom & Gestures
+      ['gesturestart', 'gesturechange', 'gestureend'].forEach(function(ev) {
+        document.addEventListener(ev, function(e) { e.preventDefault(); }, { passive: false });
+      });
+    })();
+  </script>
 </head>
 
 <body>

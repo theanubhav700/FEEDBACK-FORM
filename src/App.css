@@ -735,7 +735,7 @@
   border: none;
   padding: 16px 18px;
   font-family: var(--font-body);
-  font-size: 0.98rem;
+  font-size: 1rem;
   color: var(--text-primary);
   outline: none;
   resize: vertical;
