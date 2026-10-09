@@ -10,8 +10,8 @@ export default function Header({ theme = 'dark', onToggleTheme }) {
           <div className="logo-frame">
             <div className="logo-glow" />
             <img 
-              src="/hexa.png" 
-              alt="HEXA Logo" 
+              src="/feedback-logo.png" 
+              alt="Feedback Logo" 
               className="hexa-logo-img" 
               onError={(e) => {
                 e.target.style.display = 'none';
@@ -21,8 +21,8 @@ export default function Header({ theme = 'dark', onToggleTheme }) {
           </div>
           <div className="brand-titles">
             <div className="brand-primary-row">
-              <span className="brand-name">HEXA</span>
-              <span className="brand-badge">TEAM TERMINAL</span>
+              <span className="brand-name">FEEDBACK</span>
+              <span className="brand-badge">JUDGE SYSTEM</span>
             </div>
             <span className="brand-hackathon">IDC HACKATHON 3.O</span>
           </div>

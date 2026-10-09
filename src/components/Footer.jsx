@@ -9,12 +9,12 @@ export default function Footer() {
         <div className="footer-brand-row">
           <div className="footer-logo-wrap">
             <img 
-              src="/hexa.png" 
-              alt="HEXA Logo" 
+              src="/feedback-logo.png" 
+              alt="Feedback Logo" 
               className="footer-logo-img" 
               onError={(e) => { e.target.style.display = 'none'; }}
             />
-            <span className="footer-brand-title">HEXA</span>
+            <span className="footer-brand-title">FEEDBACK</span>
           </div>
           <div className="footer-tagline">
             ENGINEERED FOR IDC HACKATHON 3.O
