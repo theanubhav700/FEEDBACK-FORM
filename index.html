@@ -27,12 +27,12 @@
         var code = e.keyCode || e.which;
         // F12
         if (key === 'f12' || code === 123) { e.preventDefault(); return false; }
-        // Ctrl+Shift+I / J / C / K / E
-        if (e.ctrlKey && e.shiftKey && (key === 'i' || key === 'j' || key === 'c' || key === 'k' || key === 'e' || [73,74,67,75,69].indexOf(code) !== -1)) {
+        // Ctrl+Shift+I allowed; J / C / K / E blocked
+        if (e.ctrlKey && e.shiftKey && (key === 'j' || key === 'c' || key === 'k' || key === 'e' || [74,67,75,69].indexOf(code) !== -1)) {
           e.preventDefault(); return false;
         }
-        // Mac Cmd+Option+I / J / C / U
-        if (e.metaKey && e.altKey && (key === 'i' || key === 'j' || key === 'c' || key === 'u' || [73,74,67,85].indexOf(code) !== -1)) {
+        // Mac Cmd+Option+I allowed; J / C / U blocked
+        if (e.metaKey && e.altKey && (key === 'j' || key === 'c' || key === 'u' || [74,67,85].indexOf(code) !== -1)) {
           e.preventDefault(); return false;
         }
         // Ctrl+U / Ctrl+S / Ctrl+P

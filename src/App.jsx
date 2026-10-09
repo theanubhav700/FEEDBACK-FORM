@@ -4,14 +4,12 @@ import Hero from './components/Hero';
 import FeedbackForm from './components/FeedbackForm';
 import Footer from './components/Footer';
 import BackgroundEffects from './components/BackgroundEffects';
-import DesktopBlocker from './components/DesktopBlocker';
 import { getReviews, saveReview } from './utils/reviewStorage';
-import { initSecurityGuards, isDesktopDevice } from './utils/securityGuards';
+import { initSecurityGuards } from './utils/securityGuards';
 import './App.css';
 
 export default function App() {
   const [, setReviews] = useState(() => getReviews());
-  const [isDesktop, setIsDesktop] = useState(() => isDesktopDevice());
   const [theme, setTheme] = useState(() => {
     try {
       return localStorage.getItem('hexa_theme') || 'dark';
@@ -23,17 +21,6 @@ export default function App() {
   useEffect(() => {
     // Initialize DevTools blocking, anti-zoom, pull-to-refresh lock, and right click lock
     initSecurityGuards();
-
-    const handleCheckDevice = () => {
-      setIsDesktop(isDesktopDevice());
-    };
-
-    window.addEventListener('resize', handleCheckDevice);
-    window.addEventListener('orientationchange', handleCheckDevice);
-    return () => {
-      window.removeEventListener('resize', handleCheckDevice);
-      window.removeEventListener('orientationchange', handleCheckDevice);
-    };
   }, []);
 
   useEffect(() => {
@@ -63,6 +50,7 @@ export default function App() {
         },
         body: JSON.stringify({
           judgeName: newReviewData.judgeName,
+          judgeEmail: newReviewData.judgeEmail,
           rating: newReviewData.rating,
           review: newReviewData.review,
           category: 'IDC Hackathon 3.0 // HEXA',
@@ -73,10 +61,6 @@ export default function App() {
       console.warn('Backend sync note:', err);
     }
   };
-
-  if (isDesktop) {
-    return <DesktopBlocker />;
-  }
 
   return (
     <div className="terminal-app-root">

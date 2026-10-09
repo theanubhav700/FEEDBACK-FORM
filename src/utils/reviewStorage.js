@@ -57,13 +57,14 @@ export function generateReviewId() {
  * Saves a new review to localStorage (prepends to make newest appear first)
  * Returns the updated array of reviews
  */
-export function saveReview({ judgeName, rating, review }) {
+export function saveReview({ judgeName, judgeEmail, rating, review }) {
   const currentReviews = getReviews();
   const now = new Date();
 
   const newReview = {
     id: generateReviewId(),
     judgeName: judgeName.trim(),
+    judgeEmail: judgeEmail ? judgeEmail.trim() : '',
     rating: Number(rating),
     review: review.trim(),
     createdAt: now.toISOString(),

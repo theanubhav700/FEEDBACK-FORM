@@ -29,8 +29,8 @@
 .cyber-bg-gradient {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, #041018 0%, #06090E 50%, #050505 100%);
-  opacity: 0.95;
+  background: #000000;
+  opacity: 1;
   transition: background var(--transition-medium), opacity var(--transition-medium);
 }
 
@@ -39,7 +39,7 @@
   opacity: 0.98;
 }
 
-/* Ambient Cyber Glow Blobs */
+/* Ambient Soft Spotify Green Glow Blobs (Smooth gradients, no lines) */
 .cyber-glow-blob {
   position: absolute;
   border-radius: 50%;
@@ -49,11 +49,11 @@
 }
 
 .blob-top-left {
-  top: -150px;
-  left: 10%;
-  width: 520px;
-  height: 460px;
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
+  top: -140px;
+  left: 5%;
+  width: 620px;
+  height: 540px;
+  background: radial-gradient(circle, rgba(29, 185, 84, 0.18) 0%, rgba(13, 54, 25, 0.08) 50%, transparent 72%);
 }
 
 [data-theme="light"] .blob-top-left {
@@ -63,114 +63,20 @@
 .blob-top-right {
   top: 15%;
   right: -100px;
-  width: 480px;
-  height: 480px;
-  background: radial-gradient(circle, rgba(0, 102, 255, 0.09) 0%, transparent 70%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(29, 185, 84, 0.12) 0%, transparent 70%);
 }
 
 [data-theme="light"] .blob-top-right {
   background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, transparent 70%);
 }
 
-.blob-center {
-  top: 45%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 720px;
-  height: 420px;
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.05) 0%, transparent 70%);
-}
-
-[data-theme="light"] .blob-center {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
-}
-
-/* Perspective Cyber Grid */
-.cyber-grid {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(to right, rgba(0, 240, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 240, 255, 0.035) 1px, transparent 1px);
-  background-size: 50px 50px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 25%, black 40%, transparent 90%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 25%, black 40%, transparent 90%);
-}
-
-[data-theme="light"] .cyber-grid {
-  background-image: 
-    linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
-}
-
-/* Floating Geometric Shapes */
-.cyber-geo-layer {
-  position: absolute;
-  inset: 0;
-}
-
-.geo-shape {
-  position: absolute;
-  border: 1px solid rgba(0, 240, 255, 0.15);
-  opacity: 0.45;
-  animation: cyberFloat 16s ease-in-out infinite;
-}
-
-[data-theme="light"] .geo-shape {
-  border-color: rgba(2, 132, 199, 0.18);
-  opacity: 0.35;
-}
-
-.geo-1 {
-  top: 120px;
-  left: 6%;
-  width: 60px;
-  height: 60px;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  background: rgba(0, 240, 255, 0.02);
-}
-
-.geo-2 {
-  top: 280px;
-  right: 8%;
-  width: 80px;
-  height: 80px;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  animation-duration: 22s;
-  animation-delay: -5s;
-}
-
-.geo-3 {
-  top: 65%;
-  left: 4%;
-  width: 45px;
-  height: 45px;
-  transform: rotate(45deg);
-  animation-duration: 18s;
-  animation-delay: -8s;
-}
-
-.geo-4 {
-  bottom: 150px;
-  right: 5%;
-  width: 70px;
-  height: 70px;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  animation-duration: 25s;
-  animation-delay: -12s;
-}
-
-/* Subtle Scanlines */
+/* Total removal of background grid lines, geometric outlines & scanlines */
+.cyber-grid,
+.cyber-geo-layer,
 .cyber-scanlines {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(rgba(14, 18, 24, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-  background-size: 100% 4px;
-  opacity: 0.3;
-}
-
-[data-theme="light"] .cyber-scanlines {
-  opacity: 0; /* Clean and crisp on light theme */
+  display: none !important;
 }
 
 /* ==========================================================================
@@ -195,9 +101,10 @@
 }
 
 .header-container {
-  max-width: var(--max-width-content);
-  margin: 0 auto;
-  padding: 0 24px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 clamp(20px, 3.5vw, 48px);
   height: var(--header-height);
   display: flex;
   align-items: center;
@@ -377,10 +284,7 @@
 }
 
 .header-tech-line {
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(90deg, transparent 0%, var(--accent-glow) 30%, var(--text-primary) 50%, var(--accent-glow) 70%, transparent 100%);
-  opacity: 0.6;
+  display: none;
 }
 
 /* ==========================================================================
@@ -389,13 +293,13 @@
 .main-content-layout {
   position: relative;
   z-index: 1;
-  max-width: var(--max-width-content);
+  max-width: 100%;
   width: 100%;
-  margin: 0 auto;
-  padding: 48px 24px 80px;
+  margin: 0;
+  padding: 36px clamp(20px, 3.5vw, 48px) 72px;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 36px;
 }
 
 /* ==========================================================================
@@ -404,11 +308,13 @@
 .hero-section {
   text-align: center;
   padding: 20px 0 10px;
+  width: 100%;
   animation: slideUp 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hero-content {
-  max-width: 800px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -444,7 +350,7 @@
   font-size: clamp(1rem, 2.2vw, 1.25rem);
   color: var(--text-secondary);
   font-weight: 400;
-  max-width: 620px;
+  max-width: 860px;
   margin-bottom: 22px;
   line-height: 1.6;
   transition: color var(--transition-medium);
@@ -512,16 +418,29 @@
 .feedback-form-container {
   position: relative;
   width: 100%;
-  max-width: var(--max-width-form);
+  max-width: 100%;
   background: var(--bg-surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
-  padding: 38px 40px;
+  padding: 38px clamp(20px, 3.5vw, 48px);
   box-shadow: var(--shadow-card);
   transition: all var(--transition-medium);
   animation: slideUp 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+@media (max-width: 768px) {
+  .form-row-2col {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
 
 .feedback-form-container:hover {
@@ -864,8 +783,16 @@
 }
 
 .star-btn.filled .star-icon {
-  color: var(--accent-gold);
-  filter: drop-shadow(0 0 10px var(--accent-gold-glow));
+  color: #FFB800;
+  fill: #FFB800;
+  filter: drop-shadow(0 0 10px rgba(255, 184, 0, 0.65));
+}
+
+.star-btn.hovered.filled .star-icon,
+.star-btn.hovered .star-icon {
+  color: #FFC72C;
+  fill: #FFC72C;
+  filter: drop-shadow(0 0 14px rgba(255, 199, 44, 0.8));
 }
 
 .star-btn.hovered {
@@ -936,28 +863,29 @@
   position: relative;
   width: 100%;
   height: 56px;
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-  border: 1px solid var(--border-accent-strong);
-  border-radius: 8px;
-  color: #040810;
+  background: #1DB954;
+  border: 1px solid #1ed760;
+  border-radius: 500px;
+  color: #000000;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: var(--shadow-btn-glow);
-  transition: transform var(--transition-medium), box-shadow var(--transition-medium), filter var(--transition-medium);
+  box-shadow: 0 4px 18px rgba(29, 185, 84, 0.45);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium), background var(--transition-medium);
 }
 
 [data-theme="light"] .submit-feedback-btn {
-  color: #FFFFFF;
+  background: #1DB954;
+  color: #000000;
 }
 
 .submit-feedback-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 0 28px var(--accent-glow), 0 8px 24px rgba(0, 0, 0, 0.2);
-  filter: brightness(1.08);
+  background: #1ed760;
+  transform: scale(1.015);
+  box-shadow: 0 0 28px rgba(29, 185, 84, 0.65), 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .submit-feedback-btn:active:not(:disabled) {
-  transform: translateY(0);
+  transform: scale(0.99);
 }
 
 .submit-feedback-btn:disabled {
@@ -1183,9 +1111,10 @@
 }
 
 .footer-container {
-  max-width: var(--max-width-content);
-  margin: 0 auto;
-  padding: 0 24px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 clamp(20px, 3.5vw, 48px);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -1255,7 +1184,8 @@
 /* Large screens (>= 1440px) */
 @media (min-width: 1440px) {
   :root {
-    --max-width-content: 1180px;
+    --max-width-content: 100%;
+    --max-width-form: 100%;
   }
 }
 

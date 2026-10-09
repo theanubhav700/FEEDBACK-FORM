@@ -48,19 +48,18 @@ export function initSecurityGuards() {
       return false;
     }
 
-    // Ctrl+Shift+I (Inspect), Ctrl+Shift+J (Console), Ctrl+Shift+C (Inspect Element)
-    // Ctrl+Shift+K (Firefox Console), Ctrl+Shift+E (Network)
+    // Ctrl+Shift+I is allowed (other shortcuts like Ctrl+Shift+J, C, K, E, M remain blocked)
     if (e.ctrlKey && e.shiftKey) {
-      if (['i', 'j', 'c', 'k', 'e', 'm'].includes(key) || [73, 74, 67, 75, 69, 77].includes(keyCode)) {
+      if (['j', 'c', 'k', 'e', 'm'].includes(key) || [74, 67, 75, 69, 77].includes(keyCode)) {
         e.preventDefault();
         e.stopPropagation();
         return false;
       }
     }
 
-    // Mac Cmd+Option+I, Cmd+Option+J, Cmd+Option+C, Cmd+Option+U
+    // Mac Cmd+Option+J, C, U (Cmd+Option+I allowed)
     if (e.metaKey && e.altKey) {
-      if (['i', 'j', 'c', 'u'].includes(key) || [73, 74, 67, 85].includes(keyCode)) {
+      if (['j', 'c', 'u'].includes(key) || [74, 67, 85].includes(keyCode)) {
         e.preventDefault();
         e.stopPropagation();
         return false;
@@ -164,17 +163,12 @@ export function initSecurityGuards() {
     }
   });
 
-  // 8. CONSOLE SECURITY WARNING & SANITIZER
+  // 8. CONSOLE LOG
   try {
-    const warningTitle = 'font-size: 26px; font-weight: 800; color: #FF0055; text-shadow: 0 0 10px rgba(255,0,85,0.7);';
-    const warningBody = 'font-size: 13px; font-weight: 500; color: #00F0FF;';
-    console.log('%c⛔ SECURITY PROTOCOL ACTIVE', warningTitle);
-    console.log('%cTeam HEXA // Developer inspection, zoom, and source tampering are restricted.', warningBody);
-
-    // Periodically clear console to protect code confidentiality
-    setInterval(() => {
-      console.clear();
-    }, 2500);
+    const warningTitle = 'font-size: 20px; font-weight: 800; color: #00F0FF; text-shadow: 0 0 10px rgba(0,240,255,0.7);';
+    const warningBody = 'font-size: 13px; font-weight: 500; color: #94A3B8;';
+    console.log('%c⚡ TEAM HEXA // IDC HACKATHON 3.O', warningTitle);
+    console.log('%cJudge Review System active. Ctrl+Shift+I enabled for inspection.', warningBody);
   } catch {
     // ignore
   }

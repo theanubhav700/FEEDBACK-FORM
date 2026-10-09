@@ -1,9 +1,10 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import StarRating from './StarRating';
 import SuccessMessage from './SuccessMessage';
 
 export default function FeedbackForm({ onReviewSubmitted }) {
   const [judgeName, setJudgeName] = useState('');
+  const [judgeEmail, setJudgeEmail] = useState('');
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
   
@@ -39,6 +40,17 @@ export default function FeedbackForm({ onReviewSubmitted }) {
       }
     }
 
+    if (field === 'judgeEmail') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!value || !value.trim()) {
+        newErrors.judgeEmail = 'Please enter your email.';
+      } else if (!emailRegex.test(value.trim())) {
+        newErrors.judgeEmail = 'Please enter a valid email address.';
+      } else {
+        delete newErrors.judgeEmail;
+      }
+    }
+
     if (field === 'rating') {
       if (!value || value < 1 || value > 5) {
         newErrors.rating = 'Please select a star rating.';
@@ -65,6 +77,7 @@ export default function FeedbackForm({ onReviewSubmitted }) {
   const handleBlur = (field) => {
     setTouched(prev => ({ ...prev, [field]: true }));
     if (field === 'judgeName') validateField('judgeName', judgeName);
+    if (field === 'judgeEmail') validateField('judgeEmail', judgeEmail);
     if (field === 'rating') validateField('rating', rating);
     if (field === 'review') validateField('review', review);
   };
@@ -74,6 +87,14 @@ export default function FeedbackForm({ onReviewSubmitted }) {
     setJudgeName(val);
     if (touched.judgeName) {
       validateField('judgeName', val);
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const val = e.target.value;
+    setJudgeEmail(val);
+    if (touched.judgeEmail) {
+      validateField('judgeEmail', val);
     }
   };
 
@@ -99,17 +120,27 @@ export default function FeedbackForm({ onReviewSubmitted }) {
     // Mark all as touched
     setTouched({
       judgeName: true,
+      judgeEmail: true,
       rating: true,
       review: true
     });
 
     // Validate all
     const isNameValid = judgeName.trim().length >= MIN_NAME_LENGTH;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isEmailValid = judgeEmail.trim().length > 0 && emailRegex.test(judgeEmail.trim());
     const isRatingValid = rating >= 1 && rating <= 5;
     const isReviewValid = review.trim().length >= MIN_REVIEW_LENGTH && review.length <= MAX_REVIEW_LENGTH;
 
     const currentErrors = {};
     if (!isNameValid) currentErrors.judgeName = 'Please enter your name.';
+    if (!isEmailValid) {
+      if (!judgeEmail.trim()) {
+        currentErrors.judgeEmail = 'Please enter your email.';
+      } else {
+        currentErrors.judgeEmail = 'Please enter a valid email address.';
+      }
+    }
     if (!isRatingValid) currentErrors.rating = 'Please select a star rating.';
     if (!isReviewValid) {
       if (review.trim().length < MIN_REVIEW_LENGTH) {
@@ -133,6 +164,7 @@ export default function FeedbackForm({ onReviewSubmitted }) {
 
     const savedReview = {
       judgeName: judgeName.trim(),
+      judgeEmail: judgeEmail.trim(),
       rating,
       review: review.trim()
     };
@@ -160,6 +192,7 @@ export default function FeedbackForm({ onReviewSubmitted }) {
   const handleResetForm = () => {
     if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
     setJudgeName('');
+    setJudgeEmail('');
     setRating(0);
     setReview('');
     setErrors({});
@@ -227,7 +260,41 @@ export default function FeedbackForm({ onReviewSubmitted }) {
             )}
           </div>
 
-          {/* FIELD 2: Star Rating */}
+          {/* FIELD 2: Judge Email (Right below Judge Name) */}
+          <div className={`form-group ${touched.judgeEmail && errors.judgeEmail ? 'error' : ''}`}>
+            <label htmlFor="judge-email-input" className="form-label">
+              <span className="label-text">Judge Email</span>
+              <span className="label-required">*</span>
+            </label>
+            <div className="input-wrapper">
+              <div className="input-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </div>
+              <input
+                id="judge-email-input"
+                type="email"
+                className="form-input"
+                placeholder="Enter your email address (e.g. judge@organization.com)"
+                value={judgeEmail}
+                onChange={handleEmailChange}
+                onBlur={() => handleBlur('judgeEmail')}
+                disabled={isSubmitting}
+                autoComplete="email"
+              />
+              <div className="input-focus-border" />
+            </div>
+            {touched.judgeEmail && errors.judgeEmail && (
+              <div className="form-error-msg animate-error" role="alert">
+                <span className="error-icon">⚠</span>
+                <span>{errors.judgeEmail}</span>
+              </div>
+            )}
+          </div>
+
+          {/* FIELD 3: Star Rating */}
           <div className={`form-group ${touched.rating && errors.rating ? 'error' : ''}`}>
             <label className="form-label">
               <span className="label-text">Overall Rating</span>
